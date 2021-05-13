@@ -8,11 +8,13 @@ const Trending = () => {
 
     const [page, setPage] = useState(1);
     const [content, setContent] = useState([]);
-
+    const [numOfPages, setNumOfPages] = useState();
     const fetchTrending = async () => {
         const { data } = await axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`);
-        //console.log(data.results)
+
+        // console.log(data.total_pages);
         setContent(data.results);
+        setNumOfPages(data.total_pages);
     }
 
     useEffect(() => {
@@ -35,7 +37,7 @@ const Trending = () => {
                     />
                 )}
             </div>
-            <CustomPagination setPage={setPage} />
+            <CustomPagination setPage={setPage} numOfPages={numOfPages} />
         </div>
     )
 }
